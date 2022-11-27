@@ -1,3 +1,5 @@
+package Lambda;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -71,6 +73,18 @@ public class Lambda01 {
                 forEach(Lambda01::yazdir);
 
     }
+    // yukardaki Task'i filter() kısmını method referance ile yapalım
+    public static boolean ciftBul(int a) {
+        return a % 2 == 0; // = =
+    }
+    public static void printCiftElFunctional1(List<Integer> sayi) {
+        sayi.
+                stream().
+                filter(Lambda01::ciftBul).  // method refrance
+                forEach(Lambda01::yazdir);
+
+    }
+
     //TASK  : structural Programming ile list elemanlarinin  cift olanlarini ayni satirda aralarina bosluk birakarak print ediniz.
     public static void printCiftElStructured(List<Integer> sayi) {
         for (Integer w: sayi) {
