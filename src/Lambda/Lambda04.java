@@ -1,11 +1,6 @@
 package Lambda;
 
-import Lambda.Universite;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Lambda04 {
@@ -29,6 +24,12 @@ public class Lambda04 {
         System.out.println(matBolumVarMi(unv));
         System.out.println();
         System.out.println(ogrSayisiBykSirala(unv));
+        System.out.println();
+        System.out.println(matBolumSayisi(unv));
+        System.out.println();
+        System.out.println(ogrcSayisi550BykMaxNotOrt(unv));
+        System.out.println();
+        System.out.println(ogrcSayisi1050AzMinNotOrt(unv));
 
     }
 
@@ -44,16 +45,39 @@ public class Lambda04 {
         return unv.
                 stream(). // akış sağlandı
                         anyMatch(t->t.getBolum(). // objelerin bölüm isimleri alındı
-                        toLowerCase(). // bölüm isimlerindeki karakterler küçük harfe çevrildi
+                        toLowerCase() . // bölüm isimlerindeki karakterler küçük harfe çevrildi
                         contains("mat")); // mat kelimeis var mı kontrol
     }
     //task 03-->universite'leri ogr sayilarina gore b->k siralayiniz.
     public static List<Universite> ogrSayisiBykSirala(List<Universite> unv) {
-        return unv.
+        return unv.   // List<Integer>  ---> (1,2,3,4)   // List<Universite> ---> (u01,u02,u03,u04,u05)
                 stream(). // akış sağlandı
-                        sorted(Comparator.comparing(Universite::getOgrSayisi).reversed()).
+                sorted(Comparator.comparing(Universite::getOgrSayisi).reversed()).
                 // universiteler öğrenci sayısına göre terden sıralandı
                         collect(Collectors.toList()); // Stream yapısı List yapısına dönüştürüldü
     }
+    //task 04-->"matematik" bolumlerinin sayisini  print ediniz.
+    public static int matBolumSayisi(List<Universite> unv){
+        return (int) unv.
+                stream(). //akış sağladım
+                        filter(t->t.getBolum().contains("mat")). // matematik bölümü olan ünv. seçtim
+                        count(); // seçilen unv. sayısını aldım
+    }
 
+    //task 05-->Ogrenci sayilari 550'dan fazla olan universite'lerin en buyuk notOrt'unu bulunuz.
+    public static OptionalInt ogrcSayisi550BykMaxNotOrt(List<Universite> unv){
+        return unv.
+                stream().
+                filter(t->t.getOgrSayisi()>550).
+                mapToInt(t->t.getNotOrt()).
+                max();
+    }
+    //task 06-->Ogrenci sayilari 1050'dan az olan universite'lerin en kucuk notOrt'unu bulunuz.
+    public static OptionalInt ogrcSayisi1050AzMinNotOrt(List<Universite> unv) {
+        return unv.
+                stream().
+                filter(t->t.getOgrSayisi()<1050).
+                mapToInt(t->t.getNotOrt()).
+                min();
+    }
 }
